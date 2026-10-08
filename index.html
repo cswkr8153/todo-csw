@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>할일 앱</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="fx"></div>
+<div class="app">
+  <div class="top">
+    <div class="top-left">
+      <h1>📝 할일</h1>
+      <div class="clock" id="clock"></div>
+      <div id="weather">🌐 날씨 불러오는 중…</div>
+    </div>
+    <blockquote id="quote"></blockquote>
+  </div>
+  <div id="alert"></div>
+  <div id="banner"></div>
+  <div class="team">
+    <h2>👥 동료</h2>
+    <form id="member-form">
+      <input type="text" id="new-member" placeholder="동료 이름" autocomplete="off">
+      <button type="submit">동료 추가</button>
+    </form>
+    <div class="chips" id="members"></div>
+  </div>
+  <form id="add-form">
+    <input type="text" id="new-todo" placeholder="할일을 입력하세요" autocomplete="off">
+    <select id="new-assignee" title="담당자"></select>
+    <input type="date" id="new-due" title="마감일">
+    <button type="submit">추가</button>
+  </form>
+  <div class="filter" id="filter"></div>
+  <ul id="list"></ul>
+  <div class="count" id="count"></div>
+
+  <section class="chart-box" aria-labelledby="chart-title">
+    <div class="chart-head">
+      <h2 id="chart-title">📊 할일 개수와 달성률</h2>
+      <div class="chart-toggle" id="chart-toggle" role="group" aria-label="차트 단위"></div>
+    </div>
+    <div class="legend">
+      <span><i class="sw sw-bar"></i>할일 개수 (왼쪽 축)</span>
+      <span><i class="sw sw-line"></i>달성률 (오른쪽 축)</span>
+    </div>
+    <div class="chart-wrap" id="chart"></div>
+    <div class="chart-note" id="chart-note"></div>
+    <details class="chart-table">
+      <summary>표로 보기</summary>
+      <div id="chart-table"></div>
+    </details>
+  </section>
+</div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
