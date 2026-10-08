@@ -461,7 +461,7 @@ document.getElementById('member-form').onsubmit = e => {
 render();
 
 const clockEl = document.getElementById('clock');
-// ---- 오늘의 글귀 (날짜마다 하나씩 순환) ----
+// ---- 글귀 (사이트를 열 때마다 무작위로 하나, 직전과 같은 글귀는 피함) ----
 const QUOTES = [
   { q: '새는 알에서 나오려고 투쟁한다. 알은 세계다. 태어나려는 자는 하나의 세계를 파괴하지 않으면 안 된다.', a: '헤르만 헤세', b: '데미안' },
   { q: '사막이 아름다운 것은 어딘가에 우물을 숨기고 있기 때문이야.', a: '앙투안 드 생텍쥐페리', b: '어린 왕자' },
@@ -474,9 +474,12 @@ const QUOTES = [
   { q: '인간은 생각하는 갈대이다.', a: '블레즈 파스칼', b: '팡세' }
 ];
 function renderQuote() {
-  const n = new Date();
-  const day = Math.floor(Date.UTC(n.getFullYear(), n.getMonth(), n.getDate()) / 86400000);
-  const item = QUOTES[day % QUOTES.length];
+  let last = -1;
+  try { last = Number(localStorage.getItem('lastQuote')); } catch (e) {}
+  let idx;
+  do { idx = Math.floor(Math.random() * QUOTES.length); } while (idx === last && QUOTES.length > 1);
+  try { localStorage.setItem('lastQuote', idx); } catch (e) {}
+  const item = QUOTES[idx];
   const el = document.getElementById('quote');
   el.innerHTML = '';
   const q = document.createElement('span');
@@ -493,7 +496,7 @@ let lastDay = new Date().toDateString();
 function tick() {
   // 자정이 지나 날짜가 바뀌면 D-day 계산을 다시 반영
   const day = new Date().toDateString();
-  if (day !== lastDay) { lastDay = day; renderQuote(); render(); }
+  if (day !== lastDay) { lastDay = day; render(); }
   clockEl.textContent = new Date().toLocaleString('ko-KR', {
     year: 'numeric', month: 'long', day: 'numeric', weekday: 'long',
     hour: '2-digit', minute: '2-digit', second: '2-digit'
